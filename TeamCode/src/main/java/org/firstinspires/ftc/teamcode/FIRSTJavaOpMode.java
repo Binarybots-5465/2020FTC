@@ -1,17 +1,19 @@
 package org.firstinspires.ftc.teamcode;
 
+import com.qualcomm.robotcore.hardware.Gyroscope;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
-import com.qualcomm.robotcore.hardware.DcMotor;
-import com.qualcomm.robotcore.*;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
-import com.qualcomm.hardware.eventloop.opmode.Gyroscope;
+import com.qualcomm.robotcore.hardware.DcMotor;
+import com.qualcomm.robotcore.hardware.DigitalChannel;
+import com.qualcomm.robotcore.hardware.Servo;
+
 
 // Testing Opmode
 @TeleOp
 
 public class FIRSTJavaOpMode extends LinearOpMode {
     private Gyroscope imu;
-    private DCMotor motorTest;
+    private DcMotor motorTest;
     private DigitalChannel digitalTouch;
     private Servo servoTest;
 
@@ -28,7 +30,7 @@ public void runOpMode(){
     waitForStart();
 
     // Keep running till the driver stops
-    while(opModeIsActive){
+    while(opModeIsActive()){
         telemetry.addData("Status", "Running");
         telemetry.update();
     }

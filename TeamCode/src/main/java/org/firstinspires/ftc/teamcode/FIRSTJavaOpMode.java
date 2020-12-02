@@ -18,6 +18,11 @@ public class FIRSTJavaOpMode extends LinearOpMode {
     private DcMotor frontRight;
     private DcMotor backLeft;
     private DcMotor backRight;
+    private DcMotor shooterLeft;
+    private DcMotor shooterRight;
+    private DcMotor conveyorMotor;
+    private DcMotor intakeMotor;
+    boolean shooterOn;
     private DigitalChannel digitalTouch;
     private Servo servoTest;
 
@@ -33,6 +38,10 @@ public void runOpMode(){
     // Back Right is located on port 3
     backRight = hardwareMap.get(DcMotor.class, "backRight");
 
+    shooterLeft = hardwareMap.get(DcMotor.class, "shooterLeft");
+
+    shooterRight = hardwareMap.get(DcMotor.class, "shooterRight");
+
     frontLeft.setDirection(DcMotor.Direction.FORWARD);
     frontLeft.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
 
@@ -45,8 +54,15 @@ public void runOpMode(){
     backRight.setDirection(DcMotor.Direction.REVERSE);
     backRight.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
 
+    shooterLeft.setDirection(DcMotor.Direction.FORWARD);
+    shooterLeft.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+
+    shooterRight.setDirection(DcMotor.Direction.REVERSE);
+    shooterRight.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+
     double leftPower;
     double rightPower;
+    double shooterPower;
 
     telemetry.addData("Status", "Initialized");
     telemetry.update();
@@ -65,6 +81,10 @@ public void runOpMode(){
         backRight.setPower(rightPower);
         telemetry.addData("Right Stick: ",String.valueOf(rightPower));
 
+        shooterPower = gamepad1.x ? 1 : 0;
+        shooterOn = gamepad1.x;
+        shooterLeft.setPower(shooterPower);
+        shooterRight.setPower(-shooterPower);
         telemetry.addData("Status", "Running");
         telemetry.update();
     }

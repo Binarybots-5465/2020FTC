@@ -42,6 +42,8 @@ public void runOpMode(){
 
     shooterRight = hardwareMap.get(DcMotor.class, "shooterRight");
 
+    conveyorMotor = hardwareMap.get(DcMotor.class, "conveyorMotor");
+
     frontLeft.setDirection(DcMotor.Direction.FORWARD);
     frontLeft.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
 
@@ -60,9 +62,13 @@ public void runOpMode(){
     shooterRight.setDirection(DcMotor.Direction.REVERSE);
     shooterRight.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
 
+    conveyorMotor.setDirection(DcMotor.Direction.FORWARD);
+    conveyorMotor.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+
     double leftPower;
     double rightPower;
     double shooterPower;
+    double conveyorPower;
 
     telemetry.addData("Status", "Initialized");
     telemetry.update();
@@ -85,6 +91,10 @@ public void runOpMode(){
         shooterOn = gamepad1.x;
         shooterLeft.setPower(shooterPower);
         shooterRight.setPower(-shooterPower);
+
+        conveyorPower = gamepad1.right_trigger;
+        conveyorMotor.setPower(conveyorPower);
+
         telemetry.addData("Status", "Running");
         telemetry.update();
     }

@@ -94,7 +94,7 @@ public void runOpMode(){
 
         conveyorPower = gamepad1.right_trigger;
         conveyorMotor.setPower(conveyorPower);
-
+      
         telemetry.addData("Status", "Running");
         telemetry.update();
     }

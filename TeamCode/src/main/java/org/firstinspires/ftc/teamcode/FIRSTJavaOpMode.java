@@ -22,7 +22,6 @@ public class FIRSTJavaOpMode extends LinearOpMode {
     private DcMotor shooterRight;
     private DcMotor conveyorMotor;
     private DcMotor intakeMotor;
-    boolean shooterOn;
     private DigitalChannel digitalTouch;
     private Servo servoTest;
 
@@ -44,6 +43,8 @@ public void runOpMode(){
 
     conveyorMotor = hardwareMap.get(DcMotor.class, "conveyorMotor");
 
+    intakeMotor = hardwareMap.get(DcMotor.class, "intakeMotor");
+
     frontLeft.setDirection(DcMotor.Direction.FORWARD);
     frontLeft.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
 
@@ -59,16 +60,21 @@ public void runOpMode(){
     shooterLeft.setDirection(DcMotor.Direction.FORWARD);
     shooterLeft.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
 
-    shooterRight.setDirection(DcMotor.Direction.REVERSE);
+    shooterRight.setDirection(DcMotor.Direction.FORWARD);
     shooterRight.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
 
-    conveyorMotor.setDirection(DcMotor.Direction.FORWARD);
+    conveyorMotor.setDirection(DcMotor.Direction.REVERSE);
     conveyorMotor.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+
+    intakeMotor.setDirection(DcMotor.Direction.REVERSE);
+    intakeMotor.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
 
     double leftPower;
     double rightPower;
+    boolean shooterOn;
     double shooterPower;
     double conveyorPower;
+    double intakePower;
 
     telemetry.addData("Status", "Initialized");
     telemetry.update();
@@ -87,13 +93,15 @@ public void runOpMode(){
         backRight.setPower(rightPower);
         telemetry.addData("Right Stick: ",String.valueOf(rightPower));
 
-        shooterPower = gamepad1.x ? 1 : 0;
-        shooterOn = gamepad1.x;
-        shooterLeft.setPower(shooterPower);
-        shooterRight.setPower(-shooterPower);
+        shooterPower = gamepad1.left_trigger;
+        shooterLeft.setPower(10 * shooterPower);
+        shooterRight.setPower(-10 * shooterPower);
 
         conveyorPower = gamepad1.right_trigger;
         conveyorMotor.setPower(conveyorPower);
+
+        intakePower = gamepad1.right_trigger;
+        intakeMotor.setPower(intakePower);
 
         telemetry.addData("Status", "Running");
         telemetry.update();

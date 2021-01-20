@@ -1,11 +1,10 @@
 package org.firstinspires.ftc.teamcode;
 
-import com.qualcomm.robotcore.hardware.DcMotorSimple;
-import com.qualcomm.robotcore.hardware.Gyroscope;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DigitalChannel;
+import com.qualcomm.robotcore.hardware.Gyroscope;
 import com.qualcomm.robotcore.hardware.Servo;
 
 
@@ -27,8 +26,6 @@ public class FIRSTJavaOpMode extends LinearOpMode {
 
 @Override
 public void runOpMode(){
-    imu = hardwareMap.get(Gyroscope.class, "imu");
-    // Front left is located on port 0
     frontLeft = hardwareMap.get(DcMotor.class, "frontLeft");
     //Front Right is located on port 1
     frontRight = hardwareMap.get(DcMotor.class, "frontRight");
@@ -73,6 +70,7 @@ public void runOpMode(){
     double rightPower;
     boolean shooterOn;
     double shooterPower;
+    double shooterLowPower;
     double conveyorPower;
     double intakePower;
 
@@ -96,6 +94,10 @@ public void runOpMode(){
         shooterPower = gamepad1.left_trigger;
         shooterLeft.setPower(10 * shooterPower);
         shooterRight.setPower(-10 * shooterPower);
+
+        shooterLowPower = gamepad1.left_bumper?0.5:0.0;
+        shooterLeft.setPower(shooterLowPower);
+        shooterRight.setPower(-shooterLowPower);
 
         conveyorPower = gamepad1.right_trigger;
         conveyorMotor.setPower(conveyorPower);

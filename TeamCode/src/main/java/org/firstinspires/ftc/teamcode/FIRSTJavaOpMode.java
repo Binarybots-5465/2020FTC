@@ -91,17 +91,34 @@ public void runOpMode(){
         backRight.setPower(rightPower);
         telemetry.addData("Right Stick: ",String.valueOf(rightPower));
 
+        // If the user is pressing the left bumper the intake actives at 100% power and the converyor actives at 75% power
+        if (gamepad1.left_bumper) {
+            intakeMotor.setPower(1);
+            conveyorMotor.setPower(.75);
+        }
+        //If the user lets go of the left bumper the intake and conveyor sets their power to 0%
+        else {
+            intakeMotor.setPower(0);
+            conveyorMotor.setPower(0);
+        }
+
+        // If the right trigger is being pressed the shooter activates at 100% power and the conveyour actives at 75% power
         if (gamepad1.right_trigger >= 0.01){
             shooterLeft.setPower(1);
-            shooterRight.setPower(1);
+            shooterRight.setPower(-1);
             conveyorMotor.setPower(.75);
-            intakeMotor.setPower(1);
         }
-        if(gamepad1.left_trigger >= 0.01){
-            shooterLeft.setPower(.5);
-            shooterRight.setPower(.5);
+        //else if the right bumper is being pressed the shooter actives at 85% power and the conveyour actives at 75% power
+        else if(gamepad1.right_bumper){
+            shooterLeft.setPower(.85);
+            shooterRight.setPower(-.85);
             conveyorMotor.setPower(.75);
-            intakeMotor.setPower(1);
+        }
+        //If neither are being pressed the shooter and conveyour sets the power to 0%
+        else{
+            shooterLeft.setPower(0);
+            shooterRight.setPower(0);
+            conveyorMotor.setPower(0);
         }
 
         telemetry.addData("Status", "Running");

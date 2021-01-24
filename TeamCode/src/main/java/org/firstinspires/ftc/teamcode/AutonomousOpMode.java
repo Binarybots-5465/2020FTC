@@ -108,6 +108,10 @@ public class AutonomousOpMode extends LinearOpMode {
         conveyorMotor.setPower(.5);
         intakeMotor.setPower(1);
 
+        telemetry.addData("Shooter Left Power: ", shooterLeft.getPower());
+        telemetry.addData("Shooter Right Power: ", shooterRight.getPower());
+        telemetry.update();
+
         sleep(24000);
 
         shooterLeft.setPower(0);

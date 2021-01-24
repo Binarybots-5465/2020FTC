@@ -91,21 +91,23 @@ public void runOpMode(){
         backRight.setPower(rightPower);
         telemetry.addData("Right Stick: ",String.valueOf(rightPower));
 
-        shooterPower = gamepad1.left_trigger;
-        shooterLeft.setPower(10 * shooterPower);
-        shooterRight.setPower(-10 * shooterPower);
+        shooterPower = (gamepad1.left_trigger >= 0.01) ? 1.0 : 0.0 ;
+        shooterLeft.setPower(shooterPower);
+        shooterRight.setPower(-shooterPower);
 
-        shooterLowPower = gamepad1.left_bumper?0.5:0.0;
+        shooterLowPower = gamepad1.left_bumper?1.0:0.0;
         shooterLeft.setPower(shooterLowPower);
         shooterRight.setPower(-shooterLowPower);
 
         conveyorPower = gamepad1.right_trigger;
-        conveyorMotor.setPower(conveyorPower);
+        conveyorMotor.setPower((3*conveyorPower)/4);
 
         intakePower = gamepad1.right_trigger;
         intakeMotor.setPower(intakePower);
 
         telemetry.addData("Status", "Running");
+        telemetry.addData("Shooter Power: ", shooterPower);
+        telemetry.addData("Gamepad 1 Left Trigger: ", gamepad1.left_trigger);
         telemetry.update();
     }
 }

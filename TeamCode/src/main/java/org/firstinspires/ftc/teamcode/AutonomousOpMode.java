@@ -61,7 +61,7 @@ public class AutonomousOpMode extends LinearOpMode {
         intakeMotor.setDirection(DcMotor.Direction.REVERSE);
         intakeMotor.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
 
-        double distanceToShootingPostion = 581.76;
+        double distanceToShootingPostion = motorTickCount * 5.6;
 
         waitForStart();
         // Tell the robot to reset the encoders
@@ -69,7 +69,7 @@ public class AutonomousOpMode extends LinearOpMode {
         frontRight.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         backLeft.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         backRight.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-        // Tell the robot to set the starting
+        // Tell the robot to set the starting position
         frontLeft.setTargetPosition((int)distanceToShootingPostion);
         frontRight.setTargetPosition((int)distanceToShootingPostion);
         backLeft.setTargetPosition((int)distanceToShootingPostion);
@@ -79,14 +79,17 @@ public class AutonomousOpMode extends LinearOpMode {
         frontRight.setPower(1);
         backLeft.setPower(1);
         backRight.setPower(1);
+
+        shooterLeft.setPower(1);
+        shooterRight.setPower(-1);
         // Have the robot run towards the postion.
         frontLeft.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-        frontLeft.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+        frontRight.setMode(DcMotor.RunMode.RUN_TO_POSITION);
         backLeft.setMode(DcMotor.RunMode.RUN_TO_POSITION);
         backRight.setMode(DcMotor.RunMode.RUN_TO_POSITION);
         //Keep track of where the robot is running or not
-        while(frontLeft.isBusy() || frontRight.isBusy() || backLeft.isBusy() || backRight.isBusy()){
-            telemetry.addData("Status", "Going to the shooting postion");
+        while(frontLeft.isBusy() && frontRight.isBusy() && backLeft.isBusy() && backRight.isBusy()){
+            telemetry.addData("Status", "Going to the shooting position");
             telemetry.update();
         }
         //When the robot is finished set the power to zero, to stop it
@@ -95,14 +98,14 @@ public class AutonomousOpMode extends LinearOpMode {
         backLeft.setPower(0);
         backRight.setPower(0);
 
-        sleep(500);
-
-        shooterLeft.setPower(1);
-        shooterRight.setPower(-1);
+//        frontLeft.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+//        frontRight.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+//        backLeft.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+//        backRight.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
 
         sleep(1000);
 
-        conveyorMotor.setPower(1);
+        conveyorMotor.setPower(.5);
         intakeMotor.setPower(1);
 
         sleep(24000);
@@ -110,10 +113,7 @@ public class AutonomousOpMode extends LinearOpMode {
         shooterLeft.setPower(0);
         shooterRight.setPower(0);
         conveyorMotor.setPower(0);
-        frontLeft.setPower(1);
-        frontRight.setPower(1);
-        backLeft.setPower(1);
-        backRight.setPower(1);
+
         sleep(600);
     }
 }

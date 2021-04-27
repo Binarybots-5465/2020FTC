@@ -22,7 +22,8 @@ public class FIRSTJavaOpMode extends LinearOpMode {
     private DcMotor conveyorMotor;
     private DcMotor intakeMotor;
     private DigitalChannel digitalTouch;
-    private Servo servoTest;
+    private Servo wobbleBack;
+    private Servo wobbleFront;
 
 @Override
 public void runOpMode(){
@@ -41,6 +42,10 @@ public void runOpMode(){
     conveyorMotor = hardwareMap.get(DcMotor.class, "conveyorMotor");
 
     intakeMotor = hardwareMap.get(DcMotor.class, "intakeMotor");
+
+    wobbleFront = hardwareMap.get(Servo.class, "wobbleFront");
+
+    wobbleBack = hardwareMap.get(Servo.class, "wobbleBack");
 
     frontLeft.setDirection(DcMotor.Direction.FORWARD);
     frontLeft.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
@@ -65,6 +70,10 @@ public void runOpMode(){
 
     intakeMotor.setDirection(DcMotor.Direction.REVERSE);
     intakeMotor.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+
+    wobbleFront.setDirection(Servo.Direction.REVERSE);
+
+    wobbleBack.setDirection(Servo.Direction.FORWARD);
 
     double leftPower;
     double rightPower;
@@ -104,8 +113,8 @@ public void runOpMode(){
 
         // If the right trigger is being pressed the shooter activates at 100% power and the conveyour actives at 75% power
         if (gamepad1.right_trigger >= 0.01){
-            shooterLeft.setPower(1);
-            shooterRight.setPower(-1);
+            shooterLeft.setPower(.92);
+            shooterRight.setPower(-.92);
             conveyorMotor.setPower(.75);
         }
         //else if the right bumper is being pressed the shooter actives at 85% power and the conveyour actives at 75% power
@@ -121,8 +130,18 @@ public void runOpMode(){
             conveyorMotor.setPower(0);
         }
 
+        if (gamepad1.left_trigger >= 0.01) {
+            wobbleBack.setPosition(.5);
+            sleep(250);
+            wobbleFront.setPosition(.5);
+        }
+        else {
+            wobbleFront.setPosition(0);
+            wobbleBack.setPosition(0);
+        }
+
         telemetry.addData("Status", "Running");
-        telemetry.addData("Gamepad 1 Left Trigger: ", gamepad1.left_trigger);
+        telemetry.addData("Game pad 1 Left Trigger: ", gamepad1.left_trigger);
         telemetry.addData("Shooter Left Power: ", shooterLeft.getPower());
         telemetry.addData("Shooter Right Power: ", shooterRight.getPower());
         telemetry.update();

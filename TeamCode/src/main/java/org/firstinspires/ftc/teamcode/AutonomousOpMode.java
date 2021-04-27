@@ -3,6 +3,7 @@ package org.firstinspires.ftc.teamcode;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.DcMotor;
+import com.qualcomm.robotcore.hardware.Servo;
 
 @Autonomous(name="AutonomousOpMode", group= "Autonomous")
 public class AutonomousOpMode extends LinearOpMode {
@@ -15,6 +16,8 @@ public class AutonomousOpMode extends LinearOpMode {
     private DcMotor shooterRight;
     private DcMotor conveyorMotor;
     private DcMotor intakeMotor;
+    private Servo wobbleFront;
+    private Servo wobbleBack;
 
     static final double motorTickCount = 288;
 
@@ -36,6 +39,10 @@ public class AutonomousOpMode extends LinearOpMode {
         conveyorMotor = hardwareMap.get(DcMotor.class, "conveyorMotor");
 
         intakeMotor = hardwareMap.get(DcMotor.class, "intakeMotor");
+
+        wobbleFront = hardwareMap.get(Servo.class, "wobbleFront");
+
+        wobbleBack = hardwareMap.get(Servo.class, "wobbleBack");
 
         frontLeft.setDirection(DcMotor.Direction.FORWARD);
         frontLeft.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
@@ -61,7 +68,11 @@ public class AutonomousOpMode extends LinearOpMode {
         intakeMotor.setDirection(DcMotor.Direction.REVERSE);
         intakeMotor.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
 
-        double distanceToShootingPostion = motorTickCount * 5.6;
+        wobbleFront.setDirection(Servo.Direction.FORWARD);
+
+        wobbleBack.setDirection(Servo.Direction.REVERSE);
+
+        double distanceToShootingPostion = motorTickCount * 5.4;
 
         waitForStart();
         // Tell the robot to reset the encoders
@@ -80,8 +91,8 @@ public class AutonomousOpMode extends LinearOpMode {
         backLeft.setPower(1);
         backRight.setPower(1);
 
-        shooterLeft.setPower(1);
-        shooterRight.setPower(-1);
+        shooterLeft.setPower(.92);
+        shooterRight.setPower(-.92);
         // Have the robot run towards the postion.
         frontLeft.setMode(DcMotor.RunMode.RUN_TO_POSITION);
         frontRight.setMode(DcMotor.RunMode.RUN_TO_POSITION);

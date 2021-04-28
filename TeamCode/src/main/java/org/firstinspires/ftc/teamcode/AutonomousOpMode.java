@@ -72,7 +72,7 @@ public class AutonomousOpMode extends LinearOpMode {
 
         wobbleBack.setDirection(Servo.Direction.REVERSE);
 
-        double distanceToShootingPostion = motorTickCount * 5.4;
+        double distanceToShootingPosition = motorTickCount * 5.4;
 
         waitForStart();
         // Tell the robot to reset the encoders
@@ -81,16 +81,17 @@ public class AutonomousOpMode extends LinearOpMode {
         backLeft.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         backRight.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         // Tell the robot to set the starting position
-        frontLeft.setTargetPosition((int)distanceToShootingPostion);
-        frontRight.setTargetPosition((int)distanceToShootingPostion);
-        backLeft.setTargetPosition((int)distanceToShootingPostion);
-        backRight.setTargetPosition((int)distanceToShootingPostion);
+        frontLeft.setTargetPosition((int)distanceToShootingPosition);
+        frontRight.setTargetPosition((int)distanceToShootingPosition);
+        backLeft.setTargetPosition((int)distanceToShootingPosition);
+        backRight.setTargetPosition((int)distanceToShootingPosition);
         //Set the robots power to 1
         frontLeft.setPower(1);
         frontRight.setPower(1);
         backLeft.setPower(1);
         backRight.setPower(1);
 
+        //Turn on the shooters
         shooterLeft.setPower(.92);
         shooterRight.setPower(-.92);
         // Have the robot run towards the postion.
@@ -108,13 +109,6 @@ public class AutonomousOpMode extends LinearOpMode {
         frontRight.setPower(0);
         backLeft.setPower(0);
         backRight.setPower(0);
-
-//        frontLeft.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-//        frontRight.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-//        backLeft.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-//        backRight.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-
-        sleep(1000);
 
         conveyorMotor.setPower(.5);
         intakeMotor.setPower(1);
